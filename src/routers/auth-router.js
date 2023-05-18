@@ -28,12 +28,9 @@ router.get('/google/redirect', passport.authenticate('google') ,(req,res)=>{
 })
 
 router.post('/get-otp', async (req,res) => {
-    console.log(req.body.phone);
     const otp = Math.floor(1000 + Math.random() * 9000);
     var options = {authorization : process.env.smsApiKey , message : `Your OTP for RozGaar is ${otp}` ,  numbers : [req.body.phone]}
-    console.log(options); 
     const response = await fast2sms.sendMessage(options);
-    console.log(response)
     res.render('login',{user:req.user, phone:req.body.phone});
 })
 
